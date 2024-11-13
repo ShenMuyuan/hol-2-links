@@ -21,7 +21,6 @@
 #include "ns3/frame-exchange-manager.h"
 #include "ns3/ofdm-phy.h"
 #include "ns3/wifi-phy-common.h"
-#include "ns3/wifi-phy-reception-trace-helper.h"
 #include "ns3/wifi-phy.h"
 #include "ns3/wifi-tx-vector.h"
 #include "ns3/wifi-utils.h"
@@ -34,7 +33,7 @@ main(int argc, char* argv[])
     // Assume packets are sent by packet socket client
     int macAndUpperLayerHdrSize = 42;
     std::vector<int> mcss{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
-    std::vector<int> bws{20, 40, 80};
+    std::vector<double> bws{20, 40, 80};
     std::vector<int> sizes{1500};
     bool printLog = false;
 
@@ -62,7 +61,7 @@ main(int argc, char* argv[])
                     WifiTxVector(dataMode,
                                  0,
                                  GetPreambleForTransmission(WIFI_MOD_CLASS_EHT, false),
-                                 800,
+                                 NanoSeconds(800),
                                  1,
                                  1,
                                  0,
@@ -78,7 +77,7 @@ main(int argc, char* argv[])
                     WifiTxVector(ackMode,
                                  0,
                                  WIFI_PREAMBLE_LONG,
-                                 800,
+                                 NanoSeconds(800),
                                  1,
                                  1,
                                  0,
@@ -103,7 +102,7 @@ main(int argc, char* argv[])
                         << EhtPhy::GetDataRate(
                             dataMode.GetMcsValue(),
                             bandWidth,
-                            800,
+                            NanoSeconds(800),
                             1)
                         << std::endl;
                     std::clog << "Ack mode: " << ackMode.GetUniqueName() << "\n";
@@ -130,7 +129,7 @@ main(int argc, char* argv[])
                     EhtPhy::GetDataRate(
                         dataMode.GetMcsValue(),
                         bandWidth,
-                        800,
+                        NanoSeconds(800),
                         1)
                     << "," << basicRate << "," << taoTSlots << "," << taoFSlots << "\n";
             }
